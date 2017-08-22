@@ -5,7 +5,8 @@ var cheerio = require('cheerio');
 var app = express();
 
 app.get('/scrape',function(req,res){
- var url = 'http://www.imdb.com/title/tt1229340/' ;
+ console.log(req.query.url);
+ var url = req.query.url || 'http://www.imdb.com/title/tt1229340/' ;
 
  request(url,function(error,response,html){
  	if(!error){
@@ -36,6 +37,11 @@ app.get('/scrape',function(req,res){
  	}
  	res.status(200).json(data);
  });
+ //example
+ /*var $ = cheerio.load('<html><head></head><body><div id="content"><div id="sidebar"></div><div id="main"><div id="breadcrumbs"></div><table id="data"><tr><th>Name</th><th>Address</th></tr><tr><td class="name">John</td><td class="address">Address of John</td></tr><tr><td class="name">Susan</td><td class="address">Address of Susan</td></tr></table></div></div></body></html>');
+  $('#data .name').each(function() {
+    console.log($(this).text());
+  });*/
  });
 
 app.listen('8000');
